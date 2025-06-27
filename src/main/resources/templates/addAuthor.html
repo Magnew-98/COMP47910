@@ -2,48 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Books Store Application</title>
-    <link rel="stylesheet" href="/main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore - Add New Author</title>
+    <link rel="stylesheet" th:href="@{/main.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">Modern Bookstore</h1>
+        </div>
+    </header>
 
-<h1>Books Management</h1>
-<h2>
-    <a th:href="@{/new}">Add New Book</a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a th:href="@{/}">List All Books</a>
-    &nbsp;&nbsp;&nbsp;
-    <a th:href="@{/new_author}">Add New Author</a>
-    &nbsp;&nbsp;&nbsp;
-    <a th:href="@{/authors}">List All Authors</a>
-</h2>
+    <nav class="main-nav">
+        <a class="nav-link" th:href="@{/}"><i class="fas fa-book"></i> Browse Books</a>
+        <a class="nav-link" th:href="@{/new}"><i class="fas fa-plus-circle"></i> Add Book</a>
+        <a class="nav-link" th:href="@{/authors}"><i class="fas fa-users"></i> Authors</a>
+        <a class="nav-link" th:href="@{/new_author}"><i class="fas fa-user-plus"></i> Add Author</a>
+    </nav>
 
-<div class="center">
-    <form th:action="@{/authors}" method="post" th:object="${author}">
-        <table class="center">
-            <caption>
-                <h2>Add New Author</h2>
-            </caption>
-            <tr>
-                <th>Name:</th>
-                <td>
-                    <input type="text" th:field="*{authorName}" size="45" />
-                </td>
-            </tr>
-            <tr>
-                <th>Lastname:</th>
-                <td>
-                    <input type="text" th:field="*{authorSurname}" size="45" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Save" />
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">Add New Author</h2>
 
+            <form th:action="@{/authors}" method="post" th:object="${author}">
+                <div class="form-group">
+                    <label class="form-label" for="authorName">First Name</label>
+                    <input type="text" class="form-control" id="authorName" th:field="*{authorName}" placeholder="Enter author's first name" required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="authorSurname">Last Name</label>
+                    <input type="text" class="form-control" id="authorSurname" th:field="*{authorSurname}" placeholder="Enter author's last name" required />
+                </div>
+
+                <div class="text-center mb-4">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Author</button>
+                    <a th:href="@{/authors}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Authors</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

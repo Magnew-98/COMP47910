@@ -2,53 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Books Store Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore - Add New Book</title>
     <link rel="stylesheet" th:href="@{/main.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">Modern Bookstore</h1>
+        </div>
+    </header>
 
-<h1>Books Management</h1>
-<h2>
-    <a th:href="@{/new}">Add New Book</a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a th:href="@{/}">List All Books</a>
-    &nbsp;&nbsp;&nbsp;
-    <a th:href="@{/new_author}">Add New Author</a>
-    &nbsp;&nbsp;&nbsp;
-    <a th:href="@{/authors}">List All Authors</a>
-</h2>
+    <nav class="main-nav">
+        <a class="nav-link" th:href="@{/}"><i class="fas fa-book"></i> Browse Books</a>
+        <a class="nav-link" th:href="@{/new}"><i class="fas fa-plus-circle"></i> Add Book</a>
+        <a class="nav-link" th:href="@{/authors}"><i class="fas fa-users"></i> Authors</a>
+        <a class="nav-link" th:href="@{/new_author}"><i class="fas fa-user-plus"></i> Add Author</a>
+    </nav>
 
-<div class="center">
-    <form th:action="@{/books}"
-          method="post"
-          th:object="${book}">
-        <table class="center">
-            <caption>
-                <h2>Add New Book</h2>
-            </caption>
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">Add New Book</h2>
 
-            <tr>
-                <th>Title:</th>
-                <td>
-                    <input type="text" th:field="*{book_name}" size="45"/>
-                </td>
-            </tr>
+            <form th:action="@{/books}" method="post" th:object="${book}">
+                <div class="form-group">
+                    <label class="form-label" for="book_name">Book Title</label>
+                    <input type="text" class="form-control" id="book_name" th:field="*{book_name}" placeholder="Enter book title" required />
+                </div>
 
-            <tr>
-                <th>ISBN:</th>
-                <td>
-                    <input type="text" th:field="*{isbn}" size="45"/>
-                </td>
-            </tr>
+                <div class="form-group">
+                    <label class="form-label" for="isbn">ISBN</label>
+                    <input type="text" class="form-control" id="isbn" th:field="*{isbn}" placeholder="Enter ISBN number" required />
+                </div>
 
-            <tr>
-                <td colspan="2" style="text-align: center;">
-                    <button type="submit">Save</button>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-
+                <div class="text-center mb-4">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Save Book</button>
+                    <a th:href="@{/}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to Books</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

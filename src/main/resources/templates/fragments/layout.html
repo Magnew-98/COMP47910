@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title != null ? title + ' - Modern Bookstore' : 'Modern Bookstore'}">Modern Bookstore</title>
+    <link rel="stylesheet" th:href="@{/main.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header th:fragment="header" class="site-header">
+        <div class="container">
+            <h1 class="site-title">Modern Bookstore</h1>
+        </div>
+    </header>
+
+    <nav th:fragment="navigation" class="main-nav">
+        <a class="nav-link" th:href="@{/}"><i class="fas fa-book"></i> Browse Books</a>
+        <a class="nav-link" th:href="@{/new}"><i class="fas fa-plus-circle"></i> Add Book</a>
+        <a class="nav-link" th:href="@{/authors}"><i class="fas fa-users"></i> Authors</a>
+        <a class="nav-link" th:href="@{/new_author}"><i class="fas fa-user-plus"></i> Add Author</a>
+    </nav>
+
+    <footer th:fragment="footer" class="site-footer">
+        <div class="container">
+            <p class="text-center">© 2025 Modern Bookstore. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

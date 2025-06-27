@@ -2,46 +2,98 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Books Store Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore - Browse Books</title>
     <link rel="stylesheet" th:href="@{/main.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<h1>Books Management</h1>
-<h2>
-    <a th:href="@{/new}">Add New Book</a>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a th:href="@{/}">List All Books</a>
-    &nbsp;&nbsp;&nbsp;
-    <a th:href="@{/new_author}">Add New Author</a>
-    &nbsp;&nbsp;&nbsp;
-    <a th:href="@{/authors}">List All Authors</a>
-</h2>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">Modern Bookstore</h1>
+        </div>
+    </header>
 
-<div class="center">
-    <table class="center">
-        <caption><h2>List of Books</h2></caption>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>ISBN</th>
-            <th>Actions</th>
-        </tr>
-        <tr th:each="book : ${listBooks}">
-            <td th:text="${book.id}">1</td>
-            <td th:text="${book.book_name}">Sample Book</td>
-            <td th:text="${book.isbn}">123456</td>
-            <td>
-                <form th:action="@{/books/{id}(id=${book.id})}" method="get" style="display:inline;">
-                    <button type="submit">Edit</button>
-                </form>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <form th:action="@{/delete/{id}(id=${book.id})}" method="post" style="display:inline;">
-                    <input type="hidden" name="_method" value="delete" />
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
-                </form>
-            </td>
-        </tr>
-    </table>
-</div>
+    <nav class="main-nav">
+        <a class="nav-link" th:href="@{/}"><i class="fas fa-book"></i> Browse Books</a>
+        <a class="nav-link" th:href="@{/new}"><i class="fas fa-plus-circle"></i> Add Book</a>
+        <a class="nav-link" th:href="@{/authors}"><i class="fas fa-users"></i> Authors</a>
+        <a class="nav-link" th:href="@{/new_author}"><i class="fas fa-user-plus"></i> Add Author</a>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2 class="card-title">Available Books</h2>
+
+            <div class="book-grid">
+                <div class="book-card" th:each="book : ${listBooks}">
+                    <div class="book-card-header">
+                        <h3 th:text="${book.book_name}">Sample Book</h3>
+                    </div>
+                    <div class="book-card-body">
+                        <p><strong>ISBN:</strong> <span th:text="${book.isbn}">123456</span></p>
+                        <p><strong>ID:</strong> <span th:text="${book.id}">1</span></p>
+                        <p th:if="${!book.authors.empty}"><strong>Author(s):</strong>
+                            <span th:each="author, iterStat : ${book.authors}">
+                                <span th:text="${author.name}">Author Name</span><span th:unless="${iterStat.last}">, </span>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="book-card-footer">
+                        <div class="table-actions">
+                            <form th:action="@{/books/{id}(id=${book.id})}" method="get">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</button>
+                            </form>
+                            <form th:action="@{/delete/{id}(id=${book.id})}" method="post">
+                                <input type="hidden" name="_method" value="delete" />
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?');"><i class="fas fa-trash"></i> Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alternative table view for smaller screens or when preferred -->
+            <div class="table-responsive mt-4" style="display: none;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>ISBN</th>
+                            <th>Author(s)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="book : ${listBooks}">
+                            <td th:text="${book.id}">1</td>
+                            <td th:text="${book.book_name}">Sample Book</td>
+                            <td th:text="${book.isbn}">123456</td>
+                            <td>
+                                <span th:if="${!book.authors.empty}" th:each="author, iterStat : ${book.authors}">
+                                    <span th:text="${author.name}">Author Name</span><span th:unless="${iterStat.last}">, </span>
+                                </span>
+                                <span th:if="${book.authors.empty}">-</span>
+                            </td>
+                            <td class="table-actions">
+                                <form th:action="@{/books/{id}(id=${book.id})}" method="get">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                </form>
+                                <form th:action="@{/delete/{id}(id=${book.id})}" method="post">
+                                    <input type="hidden" name="_method" value="delete" />
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this book?');"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-4">
+                <a th:href="@{/new}" class="btn btn-success"><i class="fas fa-plus-circle"></i> Add New Book</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
